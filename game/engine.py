@@ -305,7 +305,7 @@ def play():
 def reply_body(state, last, boss):
     k = KANJI[last["action"]]
     lines = [f"### {k} {NAMES[last['action']]}" + (" · 一閃 critical" if last["crit"] else ""), "",
-             f"@{last['user']}, {last['detail']}", ""]
+             f"**@{last['user']}** · {last['detail']}", ""]
     if last["event"] == "slain":
         lines += [f"**{boss['kanji']} {boss['name']} is slain.** A new chapter of the story opens. 🌸", ""]
     cur = yokai.BOSSES[state["chapter"]]
