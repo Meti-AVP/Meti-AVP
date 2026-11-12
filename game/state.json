@@ -1,16 +1,48 @@
 {
  "season": 1,
  "chapter": 0,
- "boss_hp": 80,
+ "boss_hp": 67,
  "boss_max": 80,
  "ki": 100,
  "ki_max": 100,
  "focus": false,
- "turn": 0,
+ "turn": 1,
  "falls": 0,
- "last": null,
- "log": [],
- "players": {},
+ "last": {
+  "user": "Meti-AVP",
+  "action": "slash",
+  "dmg": 13,
+  "heal": 0,
+  "crit": false,
+  "headline": "SLASH  ·  13 DAMAGE",
+  "detail": "A clean cut. Mislabel Oni staggers.",
+  "issue": 1,
+  "event": "hit"
+ },
+ "log": [
+  {
+   "turn": 1,
+   "user": "Meti-AVP",
+   "action": "slash",
+   "dmg": 13,
+   "heal": 0,
+   "crit": false,
+   "event": "hit",
+   "boss": "mislabel"
+  }
+ ],
+ "players": {
+  "Meti-AVP": {
+   "dmg": 13,
+   "moves": 1,
+   "kills": 0,
+   "heal": 0
+  }
+ },
  "slain": [],
- "recent": {}
+ "recent": {
+  "Meti-AVP": [
+   1794501058.800263
+  ]
+ }
 }

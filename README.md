@@ -38,7 +38,7 @@
 <!-- DUEL:START -->
 <p align="center">
   <img src="assets/duel/arena-mislabel.svg" width="100%" alt="Ahmed versus MISLABEL ONI, chapter 1 of 5"/>
-  <img src="assets/duel/hud-0.svg" width="100%" alt="Live status: Ki 100/100, MISLABEL ONI HP 80/80"/>
+  <img src="assets/duel/hud-1.svg" width="100%" alt="Live status: Ki 100/100, MISLABEL ONI HP 67/80"/>
 </p>
 <p align="center">
   <a href="https://github.com/Meti-AVP/Meti-AVP/issues/new?title=duel%7Cslash&body=Press+%2A%2ASubmit+new+issue%2A%2A+to+strike+with+%E6%96%AC+%2A%2ASLASH%2A%2A.%0A%0AThe+dojo+resolves+your+move+in+about+a+minute+and+the+profile+updates.+No+need+to+write+anything.+%E4%B8%83%E8%BB%A2%E3%81%B3%E5%85%AB%E8%B5%B7%E3%81%8D."><img src="assets/duel/act-slash.svg" width="24%" alt="SLASH"/></a>
@@ -55,7 +55,7 @@
 **Last moves**
 
 <table><tr><th>Turn</th><th>Fighter</th><th>Move</th><th>Result</th></tr>
-<tr><td colspan="4" align="center"><i>No blood drawn yet. Strike first.</i></td></tr>
+<tr><td>1</td><td><a href="https://github.com/Meti-AVP">@Meti-AVP</a></td><td>斬 Slash</td><td>13 dmg</td></tr>
 </table>
 
 </td><td valign="top">
@@ -63,7 +63,7 @@
 **殿堂 · Hall of honor**
 
 <table><tr><th></th><th>Fighter</th><th>Damage</th><th>Slain</th></tr>
-<tr><td colspan="4" align="center"><i>The hall is empty. Your name could be first.</i></td></tr>
+<tr><td>一</td><td><img src="https://github.com/Meti-AVP.png?size=40" width="20" height="20"/> <a href="https://github.com/Meti-AVP">@Meti-AVP</a></td><td>13</td><td>0</td></tr>
 </table>
 
 </td></tr></table>
