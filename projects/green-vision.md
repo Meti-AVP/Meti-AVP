@@ -1,4 +1,4 @@
-<p align="center"><img src="../assets/blades/07-l.svg" width="70%" alt="Green Vision"/></p>
+<p align="center"><img src="../assets/04-honors.svg" width="100%" alt="Honors earned by Green Vision"/></p>
 
 # 緑 Green Vision
 

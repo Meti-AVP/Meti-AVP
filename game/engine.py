@@ -177,9 +177,9 @@ def open_moves():
 def issue_link(action):
     q = urllib.parse.urlencode({
         "title": f"duel|{action}",
-        "body": (f"Press **Submit new issue** to strike with {KANJI[action]} **{NAMES[action]}**.\n\n"
-                 "The dojo resolves your move in about a minute and the profile updates. "
-                 "No need to write anything. 七転び八起き."),
+        "body": (f"## 👇 Press the green **Create** button below to strike with {KANJI[action]} {NAMES[action]}\n\n"
+                 "That's all: no need to write anything or change the title. The dojo bot resolves your move "
+                 "within a minute, replies here, and the duel on the profile updates. 七転び八起き"),
     })
     return f"https://github.com/{REPO}/issues/new?{q}"
 
@@ -208,8 +208,8 @@ def render(state):
         "</p>",
         "",
         f'<p align="center"><b>{boss["kanji"]} · {nice(boss["name"])}</b>: <i>{boss["lore"]}</i><br/>',
-        "<sub>Pick a move ➜ GitHub opens an issue ➜ press <b>Submit new issue</b>. "
-        "The dojo resolves it in about a minute and this screen updates. Every visitor fights the same yokai.</sub></p>",
+        "<sub><b>COMMUNITY DUEL</b> · every visitor fights the same yokai. Pick a move ➜ GitHub opens an issue ➜ "
+        "press the green <b>Create</b> button. The bot resolves it within a minute and this screen updates.</sub></p>",
         "",
     ]
     # recent moves + hall of honor side by side

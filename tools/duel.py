@@ -198,6 +198,32 @@ def buttons(out_dir):
     return out
 
 
+# ------------------------------------------------------------------------------ instant-play plate
+def play_plate(out_dir):
+    u, w, h = "pl", 1200, 128
+    defs = (f'<linearGradient id="{u}bg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E0A11"/>'
+            f'<stop offset=".6" stop-color="#5A060B"/><stop offset="1" stop-color="#2A0306"/></linearGradient>'
+            + art.blossom_defs(u) + grain_defs(u, .1))
+    pcss, petals = art.falling_petals(u, w, h, 9, seed=501, size=(.45, .8), op=(.5, .85), dur=(5, 8), wind=3)
+    body = (f'<rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="6" fill="url(#{u}bg)" stroke="{C["brass"]}" stroke-opacity=".7"/>'
+            f'<rect x="8" y="8" width="{w - 16}" height="{h - 16}" rx="3" fill="none" stroke="{C["rosary"]}" stroke-opacity=".18"/>'
+            + kanji("居合", 44, 92, 62, fill=C["rosary"], style="brush", gap=.02)
+            + f'<rect x="188" y="30" width="1" height="68" fill="{C["rosary"]}" fill-opacity=".3"/>'
+            + text(214, 66, "PLAY THE QUICK-DRAW", "ser7", 36, C["rosary"], tracking=6)
+            + text(216, 92, "ONE CLICK  ·  IN YOUR BROWSER  ·  FIVE YOKAI FROM A REAL CAREER", "san8", 11, C["brass_hi"], tracking=3)
+            + petals
+            + f'<circle cx="{w - 92}" cy="{h / 2}" r="34" fill="none" stroke="{C["rosary"]}" stroke-width="2"/>'
+            + f'<circle cx="{w - 92}" cy="{h / 2}" r="42" fill="none" stroke="{C["rosary"]}" stroke-opacity=".35" class="{u}pu"/>'
+            + f'<path d="M{w - 102} {h / 2 - 16}L{w - 74} {h / 2}L{w - 102} {h / 2 + 16}Z" fill="{C["rosary"]}"/>'
+            + text(w - 150, h / 2 + 6, "PLAY", "san8", 13, C["rosary"], tracking=4, anchor="end")
+            + f'<rect width="{w}" height="{h}" fill="url(#{u}grain)"/>')
+    css = (pcss + f"@keyframes {u}p{{0%{{transform:scale(.85);opacity:.9}}100%{{transform:scale(1.25);opacity:0}}}}"
+           f".{u}pu{{transform-box:fill-box;transform-origin:center;animation:{u}p 1.8s ease-out infinite}}")
+    svg = doc(w, h, body, css=css, defs=defs, title="Play the quick-draw duel instantly",
+              desc="Opens a browser game: wait for the brush mark, then strike first. Five yokai from a real career.")
+    return write(os.path.join(out_dir, "duel", "play.svg"), svg)
+
+
 def build(out_dir):
-    sizes = [header(out_dir)] + [arena(out_dir, i) for i in range(5)] + buttons(out_dir)
+    sizes = [header(out_dir)] + [arena(out_dir, i) for i in range(5)] + buttons(out_dir) + [play_plate(out_dir)]
     return sizes

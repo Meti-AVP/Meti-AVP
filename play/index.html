@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>居合 IAI · The Quick-Draw Duel · Ahmed Zaki</title>
+<meta name="description" content="A samurai quick-draw duel against five yokai from Ahmed Zaki's career. Wait for 斬, then strike first.">
+<meta name="theme-color" content="#070304">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%239F0A10'/%3E%3Cpath transform='translate(7 10) scale(.84)' fill='%23EBE0C2' d='M28.4 0L37.1 13.6L29.6 13.6L27.95 11.2L19 25.8C24 23.6 32 22.6 39.4 24.4C35 27.2 21 28.6 13 34L7.05 43.6L0 43.6ZM30.7 14.8L59.9 14.8L56.5 20.6L36.5 39.5L60 39.5L53.5 45.6L22.3 45.6L48 20.6L35 20.6Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Manrope:wght@600;800&family=Yuji+Syuku&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#010000;--night:#070304;--damask:#220B11;--rose:#430102;--blood:#9F0A10;--blood-hi:#C8141C;
+        --brass:#C0914F;--brass-hi:#E2BC7E;--rosary:#EBE0C2;--rosary-dim:#B9AE95;--blush:#E8C7BC}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--night);color:var(--rosary);overflow:hidden;
+            font-family:Manrope,"Segoe UI",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+  .k{font-family:"Yuji Syuku","Hiragino Mincho ProN","Yu Mincho",serif;font-weight:400}
+  .s{font-family:"Cormorant Garamond",Garamond,serif}
+  #stage{position:fixed;inset:0;display:grid;place-items:center;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+  #frame{position:relative;width:min(100vw,calc(100vh*1200/540*1));aspect-ratio:1200/540;max-height:100vh}
+  #arena{position:absolute;inset:0;width:100%;height:100%;display:block;transition:filter .25s}
+  #frame.shake{animation:shake .38s cubic-bezier(.36,.07,.19,.97)}
+  @keyframes shake{10%,90%{transform:translate(-2px,1px)}20%,80%{transform:translate(4px,-2px)}30%,50%,70%{transform:translate(-7px,3px)}40%,60%{transform:translate(7px,-3px)}}
+  .veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(7,3,4,.15),rgba(7,3,4,.82));opacity:0;transition:opacity .6s;pointer-events:none}
+  .tense .veil{opacity:1}
+  #flash{position:absolute;inset:0;background:#fff8ea;opacity:0;pointer-events:none}
+  #flash.on{animation:flash .45s ease-out}
+  #flash.red{background:#c8141c}
+  @keyframes flash{0%{opacity:.85}100%{opacity:0}}
+  #cut{position:absolute;left:-10%;top:48%;width:120%;height:3px;background:linear-gradient(90deg,transparent,#fff8ea 30%,#fff 50%,#ebe0c2 70%,transparent);
+       box-shadow:0 0 18px 4px rgba(200,20,28,.6);transform:rotate(-14deg) scaleX(0);transform-origin:left center;opacity:0;pointer-events:none}
+  #cut.on{animation:cut .5s cubic-bezier(.2,.9,.2,1) forwards}
+  @keyframes cut{0%{opacity:1;transform:rotate(-14deg) scaleX(0)}40%{opacity:1;transform:rotate(-14deg) scaleX(1)}100%{opacity:0;transform:rotate(-14deg) scaleX(1)}}
+  #signal{position:absolute;left:50%;top:50%;transform:translate(-50%,-55%) scale(.6);font-size:clamp(70px,16vw,190px);color:var(--rosary);
+          text-shadow:0 0 30px rgba(200,20,28,.9),0 0 2px #000;opacity:0;pointer-events:none}
+  #signal.on{opacity:1;transform:translate(-50%,-55%) scale(1);transition:transform .08s ease-out}
+  .hud{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;padding:2.2% 3%;pointer-events:none}
+  .side{display:flex;flex-direction:column;gap:6px}
+  .side.r{align-items:flex-end;text-align:right}
+  .nm{font-size:clamp(12px,2.1vw,24px);letter-spacing:.14em;font-weight:700}
+  .pips{display:flex;gap:6px}
+  .pip{width:clamp(10px,1.6vw,18px);height:clamp(10px,1.6vw,18px);border:1.5px solid var(--brass);transform:rotate(45deg);background:transparent}
+  .pip.on{background:var(--blood-hi);border-color:var(--rosary)}
+  .center{position:absolute;left:50%;top:21%;transform:translateX(-50%);text-align:center;pointer-events:none}
+  .chap{font-size:clamp(12px,1.8vw,20px);color:var(--brass);letter-spacing:.3em}
+  .ms{font-size:clamp(10px,1.2vw,13px);letter-spacing:.3em;color:var(--rosary-dim);margin-top:4px;font-weight:800}
+  #msg{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:min(92%,760px);text-align:center;pointer-events:none}
+  #msg .big{font-size:clamp(22px,4.4vw,52px);font-weight:700;letter-spacing:.08em;text-shadow:0 2px 18px #000}
+  #msg .sub{font-size:clamp(12px,1.7vw,19px);color:var(--blush);font-style:italic;margin-top:.35em;text-shadow:0 2px 12px #000}
+  #msg .hint{font-size:clamp(9px,1.1vw,12px);letter-spacing:.32em;color:var(--brass);font-weight:800;margin-top:1.1em}
+  .card{position:absolute;inset:0;display:grid;place-items:center;background:rgba(7,3,4,.86);text-align:center;padding:4%}
+  .card[hidden]{display:none}
+  .card h1{font-size:clamp(34px,7vw,92px);letter-spacing:.16em;font-weight:700;line-height:1}
+  .card .kj{font-size:clamp(40px,9vw,120px);color:var(--blood-hi);line-height:1}
+  .card p{max-width:640px;margin:1em auto 0;color:var(--rosary-dim);font-size:clamp(12px,1.6vw,17px);line-height:1.6}
+  .card .lore{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--blush);font-size:clamp(16px,2.4vw,26px)}
+  .btn{pointer-events:auto;display:inline-flex;align-items:center;gap:.7em;margin:1.4em .4em 0;padding:.85em 1.5em;border:1px solid var(--brass);
+       background:linear-gradient(#7E0910,#4A0509);color:var(--rosary);font:800 clamp(11px,1.3vw,14px)/1 Manrope,sans-serif;letter-spacing:.28em;
+       text-decoration:none;cursor:pointer}
+  .btn.ghost{background:transparent}
+  .btn:focus-visible{outline:2px solid var(--brass-hi);outline-offset:3px}
+  .stats{display:flex;gap:2.4em;justify-content:center;margin-top:1.2em;flex-wrap:wrap}
+  .stats b{display:block;font-family:"Cormorant Garamond",serif;font-size:clamp(26px,4vw,46px);color:var(--brass-hi)}
+  .stats span{font-size:11px;letter-spacing:.3em;color:var(--rosary-dim);font-weight:800}
+  #mute{position:fixed;right:12px;bottom:12px;z-index:5;background:transparent;border:1px solid rgba(192,145,79,.5);color:var(--brass);
+        font:800 11px Manrope,sans-serif;letter-spacing:.2em;padding:8px 10px;cursor:pointer}
+  #back{position:fixed;left:12px;bottom:12px;z-index:5;color:var(--brass);font:800 11px Manrope,sans-serif;letter-spacing:.2em;text-decoration:none;
+        border:1px solid rgba(192,145,79,.5);padding:8px 10px}
+  @media (prefers-reduced-motion:reduce){#frame.shake{animation:none}}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="frame">
+    <img id="arena" alt="" src="../assets/duel/arena-mislabel.svg">
+    <div class="veil"></div>
+    <div id="cut"></div>
+    <div id="flash"></div>
+    <div class="hud">
+      <div class="side"><div class="nm s">AHMED ZAKI <span class="k" style="color:var(--blood-hi)">侍</span></div><div class="pips" id="pp"></div></div>
+      <div class="side r"><div class="nm s" id="bn">MISLABEL ONI</div><div class="pips" id="bp"></div></div>
+    </div>
+    <div class="center"><div class="ms" id="round">ROUND 1</div></div>
+    <div id="signal" class="k">斬</div>
+    <div id="msg"><div class="big s" id="mBig"></div><div class="sub s" id="mSub"></div><div class="hint" id="mHint"></div></div>
+
+    <section class="card" id="title">
+      <div>
+        <div class="kj k">居合</div>
+        <h1 class="s">THE DUEL</h1>
+        <p class="lore">Five yokai from a real career. One rule: wait for 斬, then strike first.</p>
+        <p>Click, tap or press <b>SPACE</b> the instant the brush mark appears. Too early is dishonor. Too slow, and the yokai strikes you. Best of three rounds per yokai.</p>
+        <button class="btn" id="start">BEGIN THE DUEL</button>
+      </div>
+    </section>
+    <section class="card" hidden id="end">
+      <div>
+        <div class="kj k">道</div>
+        <h1 class="s">THE WAY CONTINUES</h1>
+        <p class="lore">All five yokai fell. Discipline in the data, honor in the product.</p>
+        <div class="stats"><div><b id="sBest">0</b><span>BEST MS</span></div><div><b id="sAvg">0</b><span>AVERAGE MS</span></div><div><b id="sFall">0</b><span>FALLS</span></div></div>
+        <a class="btn" href="https://github.com/Meti-AVP#duel">FIGHT THE COMMUNITY YOKAI</a>
+        <button class="btn ghost" id="again">DUEL AGAIN</button>
+      </div>
+    </section>
+  </div>
+</div>
+<a id="back" href="https://github.com/Meti-AVP">← PROFILE</a>
+<button id="mute" aria-pressed="false">SOUND ON</button>
+<script>
+(() => {
+  const BOSSES = [
+    {id:"mislabel", kj:"誤札鬼", name:"MISLABEL ONI", ch:"第一章", react:480, lore:"Feeds on every mislabeled LiDAR frame.", win:"Three AV pipelines purified. Promoted to QC Specialist in two months."},
+    {id:"drought", kj:"旱魃竜", name:"DROUGHT DRAGON", ch:"第二章", react:420, lore:"Drinks the Nile and breathes sand.", win:"Green Vision forecasts NDVI and drought. The desert blooms."},
+    {id:"scope", kj:"仕様鬼", name:"SCOPE-CREEP ONI", ch:"第三章", react:370, lore:"Every sprint, one more feature.", win:"A PRD so clear the scope cannot creep. Shipped on time."},
+    {id:"bugs", kj:"虫", name:"THE BUG SWARM", ch:"第四章", react:330, lore:"Ten thousand bugs, one release night.", win:"Tests green. Production quiet. Users happy."},
+    {id:"doubt", kj:"疑念将軍", name:"SHOGUN OF DOUBT", ch:"第五章", react:290, lore:"The last boss lives in your head.", win:"Graduated. The way continues."},
+  ];
+  const $ = id => document.getElementById(id);
+  const frame = $("frame"), arena = $("arena");
+  BOSSES.forEach(b => { const i = new Image(); i.src = `../assets/duel/arena-${b.id}.svg`; });
+
+  // ---------------------------------------------------------------- sound (synthesized, no files)
+  let ac = null, muted = false;
+  const audio = () => { if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } return ac; };
+  function drum(t = 0, f0 = 120, gain = .6) {
+    const a = audio(); if (!a || muted) return;
+    const o = a.createOscillator(), g = a.createGain(), n = a.currentTime + t;
+    o.frequency.setValueAtTime(f0, n); o.frequency.exponentialRampToValueAtTime(38, n + .35);
+    g.gain.setValueAtTime(gain, n); g.gain.exponentialRampToValueAtTime(.001, n + .5);
+    o.connect(g).connect(a.destination); o.start(n); o.stop(n + .52);
+  }
+  function shing(gain = .35) {
+    const a = audio(); if (!a || muted) return;
+    const len = a.sampleRate * .5, buf = a.createBuffer(1, len, a.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    const s = a.createBufferSource(), hp = a.createBiquadFilter(), bp = a.createBiquadFilter(), g = a.createGain();
+    hp.type = "highpass"; hp.frequency.value = 2600; bp.type = "bandpass"; bp.frequency.value = 5200; bp.Q.value = 6;
+    g.gain.value = gain; s.buffer = buf; s.connect(hp).connect(bp).connect(g).connect(a.destination); s.start();
+  }
+  function hit() { drum(0, 90, .8); shing(.18); }
+
+  // ---------------------------------------------------------------- state
+  let stage = 0, pw = 0, bw = 0, phase = "idle", timer = null, signalAt = 0, times = [], falls = 0, roundNo = 1, bossNow = 0;
+  const pips = (el, n) => { el.innerHTML = ""; for (let i = 0; i < 2; i++) { const p = document.createElement("i"); p.className = "pip" + (i < n ? " on" : ""); el.appendChild(p); } };
+  const say = (big, sub = "", hint = "") => { $("mBig").textContent = big; $("mSub").textContent = sub; $("mHint").textContent = hint; };
+  const fx = (cls) => { const f = $("flash"); f.className = ""; void f.offsetWidth; f.className = "on" + (cls ? " " + cls : ""); };
+  const shake = () => { frame.classList.remove("shake"); void frame.offsetWidth; frame.classList.add("shake"); };
+  function slashFx() { const c = $("cut"); c.className = ""; void c.offsetWidth; c.className = "on"; }
+
+  function loadBoss() {
+    const b = BOSSES[stage];
+    arena.src = `../assets/duel/arena-${b.id}.svg`;
+    $("bn").textContent = b.name;
+    pw = bw = 0; roundNo = 1; pips($("pp"), 0); pips($("bp"), 0);
+    say(b.name, b.lore, "TAP OR PRESS SPACE TO FACE IT");
+    phase = "intro";
+  }
+  function standoff() {
+    phase = "wait"; frame.classList.add("tense");
+    $("round").textContent = `ROUND ${roundNo}`;
+    say("", "", "STILLNESS. WAIT FOR THE MARK.");
+    drum(0, 70, .35);
+    const delay = 1300 + Math.random() * 3200;
+    timer = setTimeout(() => {
+      phase = "draw"; signalAt = performance.now();
+      $("signal").className = "k on"; shing(.4); drum(0, 160, .5);
+      const b = BOSSES[stage];
+      const bossTime = bossNow = b.react + (Math.random() * 80 - 40);
+      timer = setTimeout(() => resolve(null, bossTime), bossTime);
+    }, delay);
+  }
+  function resolve(playerMs, bossMs) {
+    clearTimeout(timer); $("signal").className = "k"; frame.classList.remove("tense");
+    const b = BOSSES[stage];
+    if (playerMs === "early") {
+      bw++; say("早い · TOO EARLY", "You drew before the mark. Dishonor.", ""); fx("red"); shake(); drum(0, 60, .7);
+    } else if (playerMs !== null) {
+      pw++; times.push(playerMs); say(`一閃 · ${Math.round(playerMs)} MS`, `Faster than the yokai (${Math.round(bossMs)} ms).`, ""); fx(); slashFx(); shake(); hit();
+    } else {
+      bw++; say(`TOO SLOW`, `The yokai struck first: ${Math.round(bossMs)} ms.`, ""); fx("red"); shake(); drum(0, 55, .8);
+    }
+    pips($("pp"), pw); pips($("bp"), bw);
+    phase = "result";
+    setTimeout(() => {
+      if (pw === 2) {
+        phase = "slain"; say(`${b.name} FALLS`, b.win, stage < BOSSES.length - 1 ? "TAP FOR THE NEXT CHAPTER" : "TAP TO FINISH");
+        drum(0, 140, .6); drum(.18, 100, .5);
+      } else if (bw === 2) {
+        phase = "fallen"; falls++; say("七転び八起き", "Fall seven times, stand up eight.", "TAP TO RISE AGAIN"); drum(0, 50, .7);
+      } else { roundNo++; phase = "ready"; say("", "", "TAP OR PRESS SPACE FOR THE NEXT ROUND"); }
+    }, 1500);
+  }
+  function act() {
+    audio(); if (ac && ac.state === "suspended") ac.resume();
+    if (phase === "intro" || phase === "ready") standoff();
+    else if (phase === "wait") resolve("early", 0);
+    else if (phase === "draw") { const ms = performance.now() - signalAt; resolve(ms, bossNow); }
+    else if (phase === "slain") {
+      stage++;
+      if (stage >= BOSSES.length) { finish(); return; }
+      loadBoss();
+    } else if (phase === "fallen") loadBoss();
+  }
+  function finish() {
+    phase = "end";
+    const best = times.length ? Math.min(...times) : 0, avg = times.length ? times.reduce((a, b) => a + b, 0) / times.length : 0;
+    $("sBest").textContent = Math.round(best); $("sAvg").textContent = Math.round(avg); $("sFall").textContent = falls;
+    $("end").hidden = false; say("", "", "");
+  }
+  function begin() {
+    stage = 0; times = []; falls = 0; $("title").hidden = true; $("end").hidden = true; loadBoss(); audio();
+  }
+  $("start").addEventListener("click", e => { e.stopPropagation(); begin(); });
+  $("again").addEventListener("click", e => { e.stopPropagation(); begin(); });
+  $("stage").addEventListener("pointerdown", e => { if (e.target.closest(".btn,#mute,#back")) return; if (phase !== "idle" && phase !== "end") act(); });
+  addEventListener("keydown", e => {
+    if (e.code === "Space" || e.code === "Enter") {
+      e.preventDefault();
+      if (phase === "idle") begin(); else if (phase !== "end") act();
+    }
+  });
+  $("mute").addEventListener("click", e => { muted = !muted; e.currentTarget.textContent = muted ? "SOUND OFF" : "SOUND ON"; e.currentTarget.setAttribute("aria-pressed", muted); });
+  pips($("pp"), 0); pips($("bp"), 0);
+})();
+</script>
+</body>
+</html>
