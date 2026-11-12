@@ -1,0 +1,16 @@
+{
+ "season": 1,
+ "chapter": 0,
+ "boss_hp": 80,
+ "boss_max": 80,
+ "ki": 100,
+ "ki_max": 100,
+ "focus": false,
+ "turn": 0,
+ "falls": 0,
+ "last": null,
+ "log": [],
+ "players": {},
+ "slain": [],
+ "recent": {}
+}

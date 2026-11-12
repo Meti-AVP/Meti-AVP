@@ -1,0 +1,56 @@
+name: 決闘 · The Duel
+
+# Visitors play by opening an issue titled "duel|slash" (or arrow, bloom, tea) from the
+# buttons on the profile. Each run resolves every open move in order, re-renders the HUD,
+# updates the README, then answers and closes the issues.
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: duel
+  cancel-in-progress: false
+
+jobs:
+  duel:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, 'duel|')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Font subsetting (optional, keeps the HUD small)
+        run: pip install --quiet fonttools || true
+
+      - name: Resolve the moves
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: python game/engine.py play
+
+      - name: Commit the new state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A README.md game/state.json assets/duel
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
+          git commit -m "⚔ duel: turn $(python -c 'import json;print(json.load(open("game/state.json"))["turn"])')"
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase
+          done
+
+      - name: Answer the fighters
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: python game/engine.py reply
